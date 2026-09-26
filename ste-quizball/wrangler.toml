@@ -1,0 +1,32 @@
+# ============================================================
+#  STE Quizball — Cloudflare Pages configuration
+# ============================================================
+#  1. Create a KV namespace (once):
+#       npx wrangler kv namespace create QUIZ_STORE
+#     Copy the returned id into `id` below.
+#
+#  2. Local dev with the real Workers runtime:
+#       npm run preview          # wrangler pages dev public --kv QUIZ_STORE
+#       (for local dev you can also keep the placeholder id below)
+#
+#  3. Deploy:
+#       npm run deploy           # wrangler pages deploy public
+# ============================================================
+
+name = "ste-quizball"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "public"
+
+# ------------------------------------------------------------
+#  KV binding — must be named QUIZ_STORE (used by functions/api/*)
+#  Replace `id` with the value from `wrangler kv namespace create`.
+# ------------------------------------------------------------
+[[kv_namespaces]]
+binding = "QUIZ_STORE"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# Set ADMIN_KEY in the Cloudflare dashboard (Settings → Environment variables)
+# to override the default officer passcode without touching the code.
+ADMIN_KEY = "STE_OFFICER_2026"

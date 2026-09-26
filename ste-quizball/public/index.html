@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" data-house="ste" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>STE Quizball — Live House Standings &amp; Weekly Bulletin</title>
+  <meta name="description" content="Live house standings, the weekly STE bulletin and the Quizball arena for Zeus, Poseidon, Athena and Aphrodite.">
+  <meta name="theme-color" content="#060a13">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Open Graph / sharing -->
+  <meta property="og:title" content="STE Quizball — Four houses, one arena of science">
+  <meta property="og:description" content="Follow the live standings for Zeus, Poseidon, Athena and Aphrodite and catch every event on the weekly bulletin.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23060a13'/%3E%3Cpath d='M13 3 6 13h4.5L9 21l8-11h-4.5L13 3Z' fill='%2322d3ee'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="home-body">
+  <div class="bg-layer" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="STE Quizball home">
+        <span class="brand-mark" id="brandMark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+            <circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title" id="brandTitle">STE Quizball</span>
+          <span class="brand-sub" id="brandSub">Science · Technology · Engineering</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="nav-link" href="#standings">Standings</a>
+        <a class="nav-link" href="#live">Live Quizball</a>
+        <a class="nav-link" href="#bulletin">Weekly Bulletin</a>
+        <a class="nav-link" href="display.html">Display screen</a>
+        <a class="nav-link" href="admin.html">Officer panel</a>
+      </nav>
+
+      <div class="header-tools">
+        <span class="live-pill" id="livePill" title="Live Quizball status">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span id="livePillText">Quizball</span>
+        </span>
+
+        <!-- House theme switcher -->
+        <div class="house-switcher" id="houseSwitcher" role="group" aria-label="Choose a house theme"></div>
+
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle colour mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.2 7l2.6 1.5M17.2 15.5 19.8 17M4.2 17l2.6-1.5M17.2 8.5 19.8 7"/></svg>
+        </button>
+
+        <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================== HERO ============================== -->
+    <section class="hero">
+      <div class="container hero-top">
+        <div>
+          <span class="eyebrow">STE Week · Mass Quizball 2026</span>
+          <h1 class="hero-title">
+            Four houses.<br>
+            One <span class="grad">arena of science</span>.
+          </h1>
+          <p class="hero-lead">
+            Zeus, Poseidon, Athena and Aphrodite go head to head across physics, marine science,
+            robotics and chemistry. Points are won at the buzzer, on the project table and in the lab —
+            this board updates the moment an officer scores.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#standings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+              Live standings
+            </a>
+            <a class="btn btn-lg" href="#bulletin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a2 2 0 0 0 2 2h2l7 4V4L8 8H6a2 2 0 0 0-2 2Z"/><path d="M18.5 9a4 4 0 0 1 0 6"/></svg>
+              Weekly bulletin
+            </a>
+            <a class="btn btn-lg btn-ghost" href="display.html">Projector view →</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="n" id="statTotalPoints">0</div>
+              <div class="l">Points on the board</div>
+            </div>
+            <div class="hero-stat">
+              <div class="n" id="statLeader">—</div>
+              <div class="l">Leading house</div>
+            </div>
+            <div class="hero-stat">
+              <div class="n" id="statQuestions">0</div>
+              <div class="l">Questions played</div>
+            </div>
+            <div class="hero-stat">
+              <div class="n" id="statEvents">0</div>
+              <div class="l">Events posted</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emblem collage -->
+        <div class="hero-emblem" aria-hidden="true">
+          <span class="emblem-ring"></span>
+          <span class="emblem-ring"></span>
+          <span class="emblem-core" id="emblemCore">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+              <circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"></circle>
+              <ellipse cx="12" cy="12" rx="10" ry="4.2"></ellipse>
+              <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+              <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+            </svg>
+          </span>
+
+          <span class="emblem-node n1" style="--node:#22d3ee" title="Zeus">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2 5.6 13.1h5.2L9.2 22l8.4-11.6h-5.4L13.4 2Z" fill="currentColor" stroke="none"></path><path d="M3.2 6.6 1.6 5m19.2 1.6L22.4 5" stroke-width="1.4"></path></svg>
+          </span>
+          <span class="emblem-node n2" style="--node:#0ea5e9" title="Poseidon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M9 21h6M12 3c-2.2 0-4 1.3-4 3.4V9M12 3c2.2 0 4 1.3 4 3.4V9M4.8 6.5v2.6a7.2 7.2 0 0 0 14.4 0V6.5"></path><path d="M9.6 18.4h4.8"></path></svg>
+          </span>
+          <span class="emblem-node n3" style="--node:#cbd5e1" title="Athena">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.2 20.2 7v10L12 21.8 3.8 17V7L12 2.2Z"></path><circle cx="12" cy="12" r="3.1"></circle><path d="M12 8.9V5.4M14.7 13.6l3 1.7M9.3 13.6l-3 1.7"></path></svg>
+          </span>
+          <span class="emblem-node n4" style="--node:#fb7185" title="Aphrodite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.4" cy="16.6" r="2.9"></circle><circle cx="17.6" cy="16.6" r="2.9"></circle><circle cx="12" cy="6" r="2.9"></circle><path d="m10.6 8.7-2.6 5.2M13.4 8.7l2.6 5.2M9.3 16.6h5.4"></path></svg>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ STANDINGS ============================ -->
+    <section class="section" id="standings">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">House Championship</span>
+            <h2 class="section-title">Live house standings</h2>
+            <p class="section-sub">Points from the Quizball buzzer, engineering challenges, lab reports and the project showcase.</p>
+          </div>
+          <div class="row">
+            <span class="badge badge-accent">Updated <span id="statUpdated">—</span></span>
+            <a class="btn btn-sm" href="display.html">Open display</a>
+          </div>
+        </div>
+
+        <div class="standings-grid" id="standingsGrid" aria-live="polite"></div>
+
+        <div class="results-strip">
+          <span>🏆 <strong>Table leader</strong> takes the STE Cup at the closing ceremony.</span>
+          <span class="spacer"></span>
+          <span>⚠️ Tactical tip: hidden bonus questions are worth double during the final round.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ LIVE STRIP ============================ -->
+    <section class="section section-tight" id="live">
+      <div class="container">
+        <span class="eyebrow">Mass Quizball</span>
+        <h2 class="section-title mb-2">What is on the board right now</h2>
+
+        <div class="live-strip">
+          <div>
+            <div class="row" style="gap:.6rem">
+              <span class="badge quiz-status-pill" id="quizStatusPill" data-status="IDLE">STANDBY</span>
+              <span class="badge"><span id="quizRound">Round 1</span></span>
+              <span class="badge text-muted" id="quizQuestionLine">No question on the board yet</span>
+            </div>
+            <div class="mini-scores" id="miniScores"></div>
+          </div>
+          <div class="stack" style="align-items:flex-start">
+            <a class="btn btn-primary" href="display.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/></svg>
+              Open the projector screen
+            </a>
+            <span class="hint">The display polls the quiz state every 500&nbsp;ms — scores and the countdown stay in sync automatically.</span>
+          </div>
+        </div>
+
+        <div class="card hidden mt-2" id="dataNotice" role="status"
+             style="border-color:var(--warn);background:var(--warn-soft)">
+          <div class="row" style="align-items:flex-start;gap:.75rem">
+            <span class="notice-icon" style="width:22px;height:22px;flex:0 0 auto;color:var(--warn)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21 19.5H3L12 3.5Z"/><path d="M12 10v4.2M12 17v.2"/></svg>
+            </span>
+            <div>
+              <strong>Live data is offline</strong>
+              <p class="text-muted" id="dataNoticeText" style="font-size:.85rem"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BULLETIN ============================ -->
+    <section class="section" id="bulletin">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Weekly Bulletin</span>
+            <h2 class="section-title">Announcements &amp; event lineup</h2>
+            <p class="section-sub" id="bulletinHint">Filter by house to see exactly where your points are waiting.</p>
+          </div>
+          <div class="row">
+            <span class="badge" id="bulletinCount">loading…</span>
+            <span class="badge text-muted" id="bulletinUpdated"></span>
+          </div>
+        </div>
+
+        <div class="bulletin-toolbar">
+          <div class="filter-bar" id="bulletinFilters" role="group" aria-label="Filter events by house"></div>
+
+          <div class="select-wrap" style="min-width:180px">
+            <input class="input" type="search" id="bulletinSearch" placeholder="Search events…" aria-label="Search events">
+          </div>
+
+          <label class="checkline">
+            <input type="checkbox" id="bulletinUpcoming">
+            Upcoming only
+          </label>
+
+          <span class="spacer"></span>
+
+          <button class="btn btn-sm" id="bulletinRefresh" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.5 4v5h-5"/></svg>
+            Refresh
+          </button>
+        </div>
+
+        <div class="bulletin-grid" id="bulletinGrid" aria-live="polite">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong style="color:var(--text)">STE Quizball</strong> · Science, Technology &amp; Engineering Week
+        <div class="footer-houses mt-1">
+          <span style="--h:#22d3ee"><i></i>Zeus</span>
+          <span style="--h:#0ea5e9"><i></i>Poseidon</span>
+          <span style="--h:#cbd5e1"><i></i>Athena</span>
+          <span style="--h:#fb7185"><i></i>Aphrodite</span>
+        </div>
+      </div>
+      <div class="text-center">
+        <div>Officers: <a href="admin.html">open the control panel</a></div>
+        <div>© <span id="footerYear">2026</span> STE Events Committee</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/bulletin.js" defer></script>
+</body>
+</html>

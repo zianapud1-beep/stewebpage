@@ -1,0 +1,101 @@
+[
+  {
+    "id": "q_em_001",
+    "round": "Round 1",
+    "category": "Electromagnetism",
+    "questionText": "Which law states that the induced electromotive force in a circuit is proportional to the rate of change of magnetic flux?",
+    "answer": "Faraday's law of induction",
+    "points": 10,
+    "house": "zeus"
+  },
+  {
+    "id": "q_em_002",
+    "round": "Round 1",
+    "category": "Electromagnetism",
+    "questionText": "Name the rule used to find the direction of force on a current-carrying conductor in a magnetic field.",
+    "answer": "Fleming's left-hand rule",
+    "points": 10,
+    "house": "all"
+  },
+  {
+    "id": "q_fl_001",
+    "round": "Round 1",
+    "category": "Fluid Mechanics",
+    "questionText": "Which principle explains why a ship made of steel floats even though steel is denser than water?",
+    "answer": "Archimedes' principle — upthrust equals the weight of displaced water",
+    "points": 15,
+    "house": "poseidon"
+  },
+  {
+    "id": "q_fl_002",
+    "round": "Round 2",
+    "category": "Fluid Mechanics",
+    "questionText": "As the speed of a moving fluid increases, what happens to its pressure — and which equation describes it?",
+    "answer": "Pressure decreases — Bernoulli's equation",
+    "points": 20,
+    "house": "poseidon"
+  },
+  {
+    "id": "q_ai_001",
+    "round": "Round 2",
+    "category": "Artificial Intelligence",
+    "questionText": "In machine learning, what is the name of the process where a model improves by comparing predictions with correct answers?",
+    "answer": "Supervised training (training via loss minimisation / backpropagation)",
+    "points": 20,
+    "house": "athena"
+  },
+  {
+    "id": "q_cs_001",
+    "round": "Round 2",
+    "category": "Computer Science",
+    "questionText": "What is the time complexity of binary search on a sorted array of n elements?",
+    "answer": "O(log n)",
+    "points": 15,
+    "house": "all"
+  },
+  {
+    "id": "q_ro_001",
+    "round": "Round 3",
+    "category": "Robotics",
+    "questionText": "Which sensor would a line-following robot use to detect a black line on a white floor, and what does it actually measure?",
+    "answer": "An infrared reflectance sensor — it measures reflected light intensity",
+    "points": 20,
+    "house": "athena"
+  },
+  {
+    "id": "q_ch_001",
+    "round": "Round 3",
+    "category": "Organic Chemistry",
+    "questionText": "What is the general formula of an alkane, and how many hydrogen atoms does a five-carbon alkane have?",
+    "answer": "CnH2n+2 — pentane (C5H12) has 12 hydrogens",
+    "points": 15,
+    "house": "aphrodite"
+  },
+  {
+    "id": "q_ch_002",
+    "round": "Final Round",
+    "category": "Organic Chemistry",
+    "questionText": "Which functional group gives a compound the ability to form hydrogen bonds with water, making short-chain alcohols fully miscible?",
+    "answer": "The hydroxyl group (–OH)",
+    "points": 25,
+    "house": "aphrodite"
+  },
+  {
+    "id": "q_fi_001",
+    "round": "Final Round",
+    "category": "Fibonacci & Sequences",
+    "questionText": "A sunflower follows the Fibonacci sequence 1, 1, 2, 3, 5, 8… What is the next term, and what is the ratio of this term to the one before it called?",
+    "answer": "13 — the ratio approaches the golden ratio (≈1.618)",
+    "points": 30,
+    "house": "aphrodite"
+  },
+  {
+    "id": "q_ph_001",
+    "round": "Final Round",
+    "category": "Physics",
+    "questionText": "A 5 kg mass is dropped from 20 m. Ignoring air resistance, how fast is it moving just before impact? (g = 9.8 m/s²)",
+    "answer": "v = √(2gh) ≈ 19.8 m/s",
+    "points": 30,
+    "house": "zeus"
+  }
+]

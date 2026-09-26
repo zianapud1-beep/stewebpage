@@ -1,0 +1,25 @@
+{
+  "status": "IDLE",
+  "round": "Round 2 · Electromagnetism",
+  "questionNumber": 3,
+  "category": "Electromagnetism",
+  "questionText": "A 2 m conductor carrying 4 A sits at 30° to a 0.5 T magnetic field. What force acts on it?",
+  "answer": "F = BIL sin θ = 0.5 × 4 × 2 × 0.5 = 2 N",
+  "points": 20,
+  "revealAnswer": false,
+  "timer": {
+    "durationMs": 30000,
+    "running": false,
+    "endsAt": null,
+    "remainingMs": 30000
+  },
+  "scores": {
+    "zeus": 145,
+    "poseidon": 120,
+    "athena": 165,
+    "aphrodite": 95
+  },
+  "version": 12,
+  "updatedAt": 1758880000000,
+  "updatedBy": "seed"
+}
