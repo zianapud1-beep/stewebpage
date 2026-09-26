@@ -1,0 +1,18 @@
+# Cloudflare Pages headers
+# (Deliberately no X-Frame-Options / CSP frame-ancestors so the board can be
+#  embedded in a hall dashboard or the Arena live preview iframe.)
+
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  X-Content-Type-Options: nosniff
+
+/*.html
+  Cache-Control: public, max-age=60, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/css/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=300, must-revalidate

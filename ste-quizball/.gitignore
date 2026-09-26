@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# local dev artefacts
+.dev-kv.json
+.dev-kv.json.tmp
+.wrangler/
+dist/
+.cache/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/

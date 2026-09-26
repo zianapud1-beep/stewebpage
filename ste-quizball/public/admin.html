@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-house="ste" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Officer Control Panel — STE Quizball</title>
+  <meta name="description" content="Officer control panel for the STE Mass Quizball and the weekly bulletin.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#060a13">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23060a13'/%3E%3Cpath d='M12 3 5 6v6c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6l-7-3Z' fill='%2322d3ee'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-body">
+  <div class="bg-layer" aria-hidden="true"></div>
+  <a class="skip-link" href="#adminApp">Skip to panel</a>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 5 6v6c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6l-7-3Z"></path>
+            <path d="m9 12 2.2 2.2L15.5 10"></path>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title">Officer Panel</span>
+          <span class="brand-sub">STE Quizball Control</span>
+        </span>
+      </a>
+
+      <span class="spacer"></span>
+
+      <div class="header-tools">
+        <div class="field" style="gap:.25rem">
+          <label class="label" for="officerName" style="font-size:.62rem">Signed in as</label>
+          <input class="input" id="officerName" type="text" placeholder="Officer name" style="width:170px;padding:.42rem .6rem;font-size:.82rem">
+        </div>
+        <a class="btn btn-sm" href="display.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/></svg>
+          Display
+        </a>
+        <a class="btn btn-sm btn-ghost" href="index.html">Home</a>
+        <button class="btn btn-sm btn-ghost" id="logoutBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H15"/><path d="M10 8l-4 4 4 4M6 12h9"/></svg>
+          Lock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== PASSCODE GATE ============================== -->
+  <div class="modal" id="gate">
+    <div class="modal-card" id="gateCard">
+      <div class="icon-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5"></rect>
+          <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"></path>
+          <path d="M12 15v3"></path>
+        </svg>
+      </div>
+      <h2>Officer access</h2>
+      <p>Enter the STE officer passcode to drive the quizball display and publish bulletin announcements.</p>
+
+      <form id="gateForm" autocomplete="off" novalidate>
+        <label class="label" for="gateInput">Officer passcode</label>
+        <div class="row" style="gap:.5rem;flex-wrap:nowrap;margin-top:.4rem">
+          <input class="input pin-input" id="gateInput" type="password" placeholder="••••••••••••" autocomplete="current-password" spellcheck="false" style="flex:1 1 auto">
+          <button class="icon-btn" id="gateToggle" type="button" aria-label="Show passcode" title="Show / hide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+
+        <div class="gate-error is-hidden" id="gateError" role="alert">
+          <span style="width:16px;height:16px;display:inline-flex">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21 19.5H3L12 3.5Z"/><path d="M12 10v4.2M12 17v.2"/></svg>
+          </span>
+          <span id="gateErrorText"></span>
+        </div>
+
+        <button class="btn btn-primary btn-block mt-2" id="gateBtn" type="submit">
+          <span id="gateBtnLabel">Unlock control panel</span>
+        </button>
+      </form>
+
+      <details class="mt-2">
+        <summary class="hint" style="cursor:pointer">Event setup help</summary>
+        <p class="hint mt-1">
+          The default officer passcode is <span class="mono">STE_OFFICER_2026</span>. Override it by adding an
+          <span class="mono">ADMIN_KEY</span> environment variable to the Cloudflare Pages project.
+          The passcode is only kept in this browser tab and is verified by the Pages Function on every write.
+        </p>
+      </details>
+    </div>
+  </div>
+
+  <!-- ============================== APP ============================== -->
+  <main class="admin-main hidden" id="adminApp" data-busy="0">
+    <div class="container">
+      <div class="tabs" role="tablist" aria-label="Control sections">
+        <button class="tab-btn" type="button" data-tab="quizball" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11l-1.2 8.5L18.5 10H12l1-8Z"/></svg>
+          Mass Quizball Manager
+        </button>
+        <button class="tab-btn" type="button" data-tab="bulletin" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a2 2 0 0 0 2 2h2l7 4V4L8 8H6a2 2 0 0 0-2 2Z"/><path d="M18.5 9a4 4 0 0 1 0 6"/></svg>
+          Weekly Bulletin Manager
+        </button>
+      </div>
+
+      <!-- ======================== TAB 1 · QUIZBALL ======================== -->
+      <section class="tab-panel is-active" data-panel="quizball" role="tabpanel" aria-label="Mass Quizball manager">
+        <div class="admin-grid">
+          <!-- LEFT COLUMN -->
+          <div class="admin-col">
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Live status &amp; timer</h2>
+                <span class="badge badge-sm" id="connDot">connecting</span>
+                <span class="spacer"></span>
+                <span class="hint">Shortcuts: <span class="kbd">B</span> <span class="kbd">T</span> <span class="kbd">A</span> <span class="kbd">R</span> <span class="kbd">1-3</span></span>
+              </div>
+
+              <div class="card-body">
+                <div class="field">
+                  <span class="label">Display status</span>
+                  <div class="status-btns">
+                    <button class="status-btn" type="button" data-status-btn="BUZZERS_OPEN"><span class="led"></span>Buzzers open</button>
+                    <button class="status-btn" type="button" data-status-btn="TIME_UP"><span class="led"></span>Time up</button>
+                    <button class="status-btn" type="button" data-status-btn="ANSWER_REVEALED"><span class="led"></span>Answer revealed</button>
+                    <button class="status-btn" type="button" data-status-btn="IDLE"><span class="led"></span>Standby / idle</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <span class="label">Timer</span>
+                  <div class="timer-presets" id="timerPresets">
+                    <button class="btn" type="button" data-seconds="10">10s<small>quick fire</small></button>
+                    <button class="btn" type="button" data-seconds="30">30s<small>standard</small></button>
+                    <button class="btn" type="button" data-seconds="60">60s<small>stretch</small></button>
+                  </div>
+                  <div class="row" style="flex-wrap:nowrap;margin-top:.5rem">
+                    <input class="input" id="customSeconds" type="number" min="1" max="3600" placeholder="Custom seconds" aria-label="Custom seconds">
+                    <button class="btn btn-primary" id="startCustom" type="button">Start</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="timer-readout">
+                    <span id="timerReadout">30.0</span>
+                    <span class="st" id="timerPhase">READY</span>
+                  </div>
+                  <div class="timer-bar" style="height:10px">
+                    <span class="timer-bar-fill" id="timerFill" style="width:100%"></span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <button class="btn" id="pauseBtn" type="button">
+                    <span class="ico" style="display:inline-flex;width:16px;height:16px">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"/></svg>
+                    </span>
+                    <span class="lbl">Pause</span>
+                  </button>
+                  <button class="btn" id="resetBtn" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4v5h5"/></svg>
+                    Reset
+                  </button>
+                  <button class="btn btn-warn" id="revealBtn" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+                    Reveal answer
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUESTION BANK -->
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Question bank</h2>
+                <span class="badge badge-sm" id="bankCount">0 saved</span>
+                <span class="spacer"></span>
+                <button class="btn btn-xs" id="bankExport" type="button" title="Download the bank as JSON">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5"/><path d="M4.5 20h15"/></svg>
+                  Export
+                </button>
+                <label class="btn btn-xs" title="Import a bank JSON file" style="margin:0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V8M7 13l5-5 5 5"/><path d="M4.5 20h15"/></svg>
+                  Import
+                  <input type="file" id="bankImport" accept="application/json,.json" class="hidden">
+                </label>
+                <button class="btn btn-xs btn-danger" id="bankClear" type="button" title="Delete every saved question">Clear</button>
+              </div>
+
+              <div class="card-body">
+                <div class="bank-list" id="bankList"></div>
+              </div>
+            </div>
+
+            <!-- ADD / EDIT QUESTION -->
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title" id="qFormTitle">Add a question</h2>
+                <span class="spacer"></span>
+                <label class="checkline">
+                  <input type="checkbox" id="openOnPush" checked>
+                  Open buzzers when pushed
+                </label>
+              </div>
+
+              <form id="qForm" class="card-body" autocomplete="off">
+                <div class="form-grid">
+                  <div class="field">
+                    <label class="label" for="qRound">Round</label>
+                    <input class="input" id="qRound" type="text" placeholder="Round 1" value="Round 1" list="roundList">
+                    <datalist id="roundList">
+                      <option value="Round 1"></option>
+                      <option value="Round 2"></option>
+                      <option value="Rapid Fire"></option>
+                      <option value="Final Round"></option>
+                      <option value="Tie-breaker"></option>
+                    </datalist>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="qCategory">Category</label>
+                    <input class="input" id="qCategory" type="text" placeholder="Electromagnetism" value="General STE" list="categoryList">
+                    <datalist id="categoryList">
+                      <option value="Electromagnetism"></option>
+                      <option value="Physics"></option>
+                      <option value="Fluid Mechanics"></option>
+                      <option value="Marine Science"></option>
+                      <option value="Robotics"></option>
+                      <option value="Artificial Intelligence"></option>
+                      <option value="Computer Science"></option>
+                      <option value="Organic Chemistry"></option>
+                      <option value="Fibonacci &amp; Sequences"></option>
+                      <option value="General STE"></option>
+                    </datalist>
+                  </div>
+
+                  <div class="field span-2">
+                    <label class="label" for="qText">Question text</label>
+                    <textarea class="textarea" id="qText" placeholder="Which law relates the force on a conductor to the current it carries in a magnetic field?" required></textarea>
+                  </div>
+
+                  <div class="field span-2">
+                    <label class="label" for="qAnswer">Answer (shown on reveal)</label>
+                    <input class="input" id="qAnswer" type="text" placeholder="F = B I L sin θ  (Fleming's left-hand rule)">
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="qPoints">Point value</label>
+                    <input class="input" id="qPoints" type="number" min="0" max="1000" step="5" value="10">
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="qHouse">Target house</label>
+                    <div class="select-wrap">
+                      <select class="select" id="qHouse">
+                        <option value="all">All houses</option>
+                        <option value="zeus">Zeus</option>
+                        <option value="poseidon">Poseidon</option>
+                        <option value="athena">Athena</option>
+                        <option value="aphrodite">Aphrodite</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <button class="btn btn-primary" type="submit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    <span id="qSaveLabel">Save to bank</span>
+                  </button>
+                  <button class="btn btn-ok" id="pushForm" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/><path d="M4 21h16"/></svg>
+                    Push to display now
+                  </button>
+                  <button class="btn btn-ghost hidden" id="qCancel" type="button">Cancel edit</button>
+                  <span class="spacer"></span>
+                  <span class="hint">Saving also updates <span class="mono">question_bank</span> in KV.</span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div class="admin-col">
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Display preview</h2>
+                <span class="spacer"></span>
+                <a class="btn btn-xs" href="display.html" target="_blank" rel="noopener">Open ↗</a>
+              </div>
+              <div class="preview-mini" data-status="IDLE">
+                <div class="pm-status"><span id="pmStatus">STANDBY</span></div>
+                <div class="row" style="gap:.4rem">
+                  <span class="badge badge-sm" id="pmRound">Round 1</span>
+                  <span class="badge badge-sm" id="pmQIndex">No question</span>
+                  <span class="badge badge-sm" id="pmCategory">—</span>
+                  <span class="badge badge-sm badge-accent" id="pmPoints">0 pts</span>
+                </div>
+                <div class="pm-q" id="pmQuestion">—</div>
+                <div class="pm-scores" id="pmScores"></div>
+              </div>
+              <p class="hint mt-1">Mirrors <span class="mono">GET /api/state</span> — refreshes automatically every 1.5&nbsp;s.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Manual score adjustment</h2>
+                <span class="spacer"></span>
+                <button class="btn btn-xs btn-danger" id="resetScores" type="button">Reset all to 0</button>
+              </div>
+              <div class="score-list" id="scoreList"></div>
+              <p class="hint mt-1">Changes are written to KV instantly and appear on every display within 500&nbsp;ms.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Control desk notes</h2>
+              </div>
+              <ul class="stack" style="gap:.55rem;font-size:.84rem;color:var(--muted)">
+                <li>• <strong style="color:var(--text)">Start a timer</strong> opens the buzzers automatically.</li>
+                <li>• <strong style="color:var(--text)">Time up</strong> locks the board; reveal the answer when the hall has settled.</li>
+                <li>• Push a question with <strong style="color:var(--text)">Open buzzers</strong> ticked for a one-click round.</li>
+                <li>• Every write is stamped with your officer name and version number.</li>
+                <li>• Keep this tab open on the control desk; the display screen runs independently.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================== TAB 2 · BULLETIN ======================== -->
+      <section class="tab-panel" data-panel="bulletin" role="tabpanel" aria-label="Weekly bulletin manager">
+        <div class="admin-grid">
+          <div class="admin-col">
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title" id="evFormTitle">Post a new event</h2>
+              </div>
+
+              <form id="evForm" class="card-body" autocomplete="off">
+                <div class="form-grid">
+                  <div class="field span-2">
+                    <label class="label" for="evTitle">Event title</label>
+                    <input class="input" id="evTitle" type="text" placeholder="Water Rocket Challenge — heat 2" required>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evWeek">Week #</label>
+                    <input class="input" id="evWeek" type="number" min="0" max="99" value="1">
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evHouse">Target house</label>
+                    <div class="select-wrap">
+                      <select class="select" id="evHouse">
+                        <option value="all">All houses (whole school)</option>
+                        <option value="zeus">Zeus</option>
+                        <option value="poseidon">Poseidon</option>
+                        <option value="athena">Athena</option>
+                        <option value="aphrodite">Aphrodite</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evCategory">Category</label>
+                    <input class="input" id="evCategory" type="text" placeholder="Engineering Challenge" list="evCategoryList">
+                    <datalist id="evCategoryList">
+                      <option value="Engineering Challenge"></option>
+                      <option value="Quizball"></option>
+                      <option value="Lab Session"></option>
+                      <option value="Workshop"></option>
+                      <option value="Showcase"></option>
+                      <option value="Deadline"></option>
+                      <option value="Assembly"></option>
+                    </datalist>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evDatetime">Date &amp; time</label>
+                    <input class="input" id="evDatetime" type="datetime-local">
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evLocation">Location</label>
+                    <input class="input" id="evLocation" type="text" placeholder="Physics Lab 2 / Main Hall">
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="evPoints">Points available</label>
+                    <input class="input" id="evPoints" type="number" min="-999" max="9999" step="5" value="10">
+                  </div>
+
+                  <div class="field span-2">
+                    <label class="label" for="evDescription">Description</label>
+                    <textarea class="textarea" id="evDescription" placeholder="Teams of four build a launcher from recycled bottles. Bring a towel — it gets wet."></textarea>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label class="checkline">
+                    <input type="checkbox" id="evPinned">
+                    Pin to the top of the bulletin
+                  </label>
+                  <span class="spacer"></span>
+                  <button class="btn btn-ghost hidden" id="evCancel" type="button">Cancel edit</button>
+                  <button class="btn btn-primary" type="submit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a2 2 0 0 0 2 2h2l7 4V4L8 8H6a2 2 0 0 0-2 2Z"/><path d="M18.5 9a4 4 0 0 1 0 6"/></svg>
+                    <span id="evSaveLabel">Publish event</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Bulletin data</h2>
+              </div>
+              <div class="row">
+                <button class="btn btn-sm" id="evExport" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5"/><path d="M4.5 20h15"/></svg>
+                  Export JSON
+                </button>
+                <label class="btn btn-sm" style="margin:0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V8M7 13l5-5 5 5"/><path d="M4.5 20h15"/></svg>
+                  Import JSON
+                  <input type="file" id="evImport" accept="application/json,.json" class="hidden">
+                </label>
+                <span class="spacer"></span>
+                <span class="hint">Stored in KV key <span class="mono">weekly_bulletin</span>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-col">
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Published events</h2>
+                <span class="badge badge-sm" id="evCount">0 events</span>
+                <span class="spacer"></span>
+                <button class="btn btn-xs" id="evRefresh" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.5 4v5h-5"/></svg>
+                  Refresh
+                </button>
+              </div>
+              <div class="bulletin-admin-list" id="eventList"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Bulletin tips</h2>
+              </div>
+              <ul class="stack" style="gap:.55rem;font-size:.84rem;color:var(--muted)">
+                <li>• Target a single house to give it a fair shot at bonus points.</li>
+                <li>• Pin the reminder students must not miss — pinned cards sort first.</li>
+                <li>• Add the exact location so teams find the venue without asking.</li>
+                <li>• Edits publish instantly; there is nothing to rebuild or deploy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/utils.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</body>
+</html>
